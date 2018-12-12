@@ -78,4 +78,7 @@ Potential outcomes notation. Randomization delivers the ATE; brief aside on SUTV
 - @Manski1995; @Keane2010a
 - @Mullainathan2017
 
+## `r advdate(mon, 4)`: Mechanical Properties of OLS
+Derivation of the OLS formula; Frisch-Waugh-Lovell theorem. Implications for interpreting regression output.
+
 # References

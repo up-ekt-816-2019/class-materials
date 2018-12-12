@@ -1,0 +1,81 @@
+---
+output: 
+  pdf_document:
+    keep_tex: false
+    fig_caption: yes
+    latex_engine: pdflatex
+    template: /Users/jnaidoo/Dropbox/office/templates/svm-latex-syllabus.tex
+bibliography: /Users/jnaidoo/Dropbox/office/library.bib
+biblio-style: authordate1
+geometry: margin=1in
+
+title: "EKT 816: Econometrics"
+author: Jesse Naidoo
+date: "Semester ???, 2019"
+
+email: "jesse.naidoo@up.ac.za"
+# web: "svmiller.com/teaching"
+officehours: "???"
+office: "Tukkiewerf 2-23"
+classroom: "Tukkiewerf 1-37"
+classhours: "???"
+
+fontfamily: mathpazo
+fontsize: 11pt
+header-includes:
+   - \linespread{1.05}
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE, dev='pdf')
+mon <- as.Date("2019-02-04")
+# fri <- as.Date("2016-01-08")
+
+advdate <- function(obj, adv) {
+ tmon <- obj + 7*(adv-1)
+ tfri <- obj + 4 + 7*(adv-1)
+ tmon <- format(tmon, format="%m/%d")
+ tfri <- format(tfri, format="%m/%d")
+ zadv <- sprintf("%02d", adv)
+ tmp <- paste("Week ",zadv,sep='',", ", tmon," - ",tfri)
+ return(tmp)
+}
+
+library(RefManageR)
+# library(knitcitations)
+# library(rcrossref)
+bib <- ReadBib("~/Dropbox/office/library.bib")
+myopts <- BibOptions(bib.style = "authoryear", style="latex", first.inits=FALSE, max.names = 20)
+
+```
+
+# Course Description
+
+This is a graduate course in econometrics. Our goal is to learn some basic techniques that economists use to (try to) establish causal claims. At a higher level, you will also need to learn how to assemble such claims together so as to build a coherent argument, but you have a little longer to learn how to do that.
+
+# Required Texts
+
+# Class Schedule
+
+Please read at least the prescribed readings before class, even if you find it hard to follow everything. It will become easier with practice.
+
+## `r advdate(mon, 1)`: Probability and Statistics Review
+Distributions, expectations, quantiles. Laws of large numbers and the central limit theorem. Estimation: mean square error vs bias. Sufficient and ancilliary statistics.
+
+## `r advdate(mon, 2)`: Probability and Statistics Review (continued)
+Consistency and precision in estimation. Weighting and sample design. Identification. Hypothesis testing: size vs power.
+
+## `r advdate(mon, 3)`: Counterfactuals and Causal Inference
+Potential outcomes notation. Randomization delivers the ATE; brief aside on SUTVA, peer effects and general equilibrium.   Examples of causal claims (especially implicit ones). Typical obstacles to estimating counterfactuals: simultaneity, measurement error, self-selection. Internal and external validity, and the value of understanding mechanisms. The importance of a clear research design. Another aside on partial identification and "structural estimation". Prediction vs causation. 
+
+*Readings (all optional)*
+
+- @Acemoglu2010; @Muralidharan2017b
+- @Angrist2010a; @Keane2010
+- @Heckman2008c; @Sims2010; @Deaton2010; @Heckman2010e
+- @Manski1995; @Keane2010a
+- @Mullainathan2017
+
+# References

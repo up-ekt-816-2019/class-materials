@@ -57,13 +57,16 @@ This is a graduate course in econometrics. Our goal is to learn some basic techn
 
 # Required Texts
 
+# Assessment
+There will be 8 problem sets, a take-home exam, and a midterm (also take-home).
+
 # Class Schedule
 
 Please read at least the prescribed readings before class, even if you find it hard to follow everything; it makes for a more productive discussion if you have figured out the easy stuff first.
 
 You may find it helpful to pattern your notes on the readings after a referee report; @Berk2017 and @Berk2015 is a useful guide to the requirements of this important type of professional communication.
 
-## `r advdate(mon, 1)`: Probability and Statistics Review
+## `r advdate(mon, 1)`: Probability and Statistics Review; Introduction to R
 Distributions, expectations, quantiles. Laws of large numbers and the central limit theorem. Estimation: mean square error vs bias. Sufficient and ancilliary statistics.
 
 ## `r advdate(mon, 2)`: Probability and Statistics Review (continued)
@@ -139,8 +142,12 @@ _Required Readings_
 - @Bound1995
 - @Stock2010
 - @Andrews2018
+- @Eisenhauer2015a
 
-## `r advdate(mon, 8)`: Selection Models (Part II); Marginal Treatment Effects, LATE, and "Monotonicity"
+## `r advdate(mon, 8)`: Autumn Break
+No class; I will post a take-home midterm before the break.
+
+## `r advdate(mon, 9)`: Selection Models (Part II); Marginal Treatment Effects, LATE, and "Monotonicity"
 
 
 _Required Readings_
@@ -156,7 +163,7 @@ _Optional Readings_
 - @Mueller-Smith2015
 - @Arnold2018
 
-## `r advdate(mon, 9)`: Applications; MTEs and LATE in Practice
+## `r advdate(mon, 10)`: Applications; MTEs and LATE in Practice
 
 
 _Required Readings_
@@ -172,7 +179,7 @@ _Optional Readings_
 - @Amiti2012
 - @Carneiro2011
 
-## `r advdate(mon, 10)`: Synthetic Panels and Diff-in-Diff
+## `r advdate(mon, 11)`: Synthetic Panels and Diff-in-Diff
 
 _Required Readings_
 
@@ -190,7 +197,7 @@ _Optional Readings_
 - @Cunningham2018
 - @Muralidharan2017a
 
-## `r advdate(mon, 11)`: Individual-Level Panel Data (Part I)
+## `r advdate(mon, 12)`: Individual-Level Panel Data (Part I)
 
 _Required Readings_
 
@@ -205,7 +212,7 @@ _Optional Readings_
 - @Macurdy2007
 - @Topel1991; @Acemoglu1999
 
-## `r advdate(mon, 12)`: Individual-Level Panel Data, Part II - Mover Designs
+## `r advdate(mon, 13)`: Individual-Level Panel Data, Part II - Mover Designs
 
 _Required Readings_
 
@@ -217,7 +224,7 @@ _Optional Readings_
 - @Abowd1999; @Borovickova2017; @Song2018
 - @Heckman2018
 
-## `r advdate(mon, 13)`: Individual-Level Panel Data, Part III - Event Studies
+## `r advdate(mon, 14)`: Individual-Level Panel Data, Part III - Event Studies
 
 _Required Readings_
 
@@ -233,5 +240,10 @@ _Optional Readings_
 - @Fama1969
 - @Atkin2016
 - @Atkin2018
+
+## `r advdate(mon, 15)`: Discussion of Applied Papers
+
+## `r advdate(mon, 16)`: Discussion of Applied Papers
+
 
 # References

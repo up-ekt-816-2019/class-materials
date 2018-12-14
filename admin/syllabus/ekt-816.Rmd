@@ -11,7 +11,7 @@ geometry: margin=1in
 
 title: "EKT 816: Econometrics"
 author: Jesse Naidoo
-date: "Semester ???, 2019"
+date: "Semester 1, 2019"
 
 email: "jesse.naidoo@up.ac.za"
 # web: "svmiller.com/teaching"
@@ -56,6 +56,21 @@ myopts <- BibOptions(bib.style = "authoryear", style="latex", first.inits=FALSE,
 This is a graduate course in econometrics. Our goal is to learn some basic techniques that economists use to establish causal claims. An immediate payoff is that you will be able to read and evaluate empirical research. You may also find these methods useful in your own work.
 
 # Required Texts
+There are two required texts:
+
+- @Angrist2008 
+- @Paarsch2016
+
+Although we will not refer explicitly to @Paarsch2016 often, it will be useful for the computational parts of the course (and indeed for those parts of your own research that require computation). 
+
+You may also find it useful to refer to these texts:
+
+- @Stachurski2016
+- @Wooldridge2010
+- @Deaton1997
+- @Cameron2005
+
+Of these, @Deaton1997 is available for free in PDF format from the World Bank's website, and Stachurski has posted many lecture slides and other supporting materials to his website.
 
 # Assessment
 There will be 8 problem sets, a take-home exam, and a midterm (also take-home).
@@ -78,12 +93,12 @@ Potential outcomes notation. Randomization delivers the ATE; brief aside on SUTV
 _Required Readings_
 
 - @Angrist1999
-- @Heckman1995; @Card2011; @Aron-Dine2012; @Muralidharan2017b
+- @Heckman1995; @Card2011; 
+- @Aron-Dine2012; @Muralidharan2017b
 - @Angrist2010a; @Keane2010; @Keane2010a
 - @Goldberger1972
-- @Imbens2009b
 - @Heckman2007
-- @Heckman2010e
+- @Imbens2009b; @Heckman2010e
 
 _Optional Readings_
 
@@ -98,6 +113,7 @@ Derivation of the OLS formula; Frisch-Waugh-Lovell theorem. Implications for int
 
 _Required Readings_
 
+- @Bound2001
 - @Meyer2015; @Griliches1986a
 - @Neal1996
 - @Altonji1999
@@ -131,10 +147,12 @@ _Required Readings_
 
 _Optional Readings_
 
+- @Angrist2000; @Graddy2006
 - @Heckman2006a
 - @Card1999; @Card2001
 
 ## `r advdate(mon, 7)`: Weak Instruments; GMM; Selection Models (Part I)
+2SLS bias; misleading inference with weak instruments. LIML. Outcome and selection equations in the "Generalized Roy Model". Varieties of treatment effects.
 
 
 _Required Readings_
@@ -147,14 +165,15 @@ _Required Readings_
 ## `r advdate(mon, 8)`: Autumn Break
 No class; I will post a take-home midterm before the break.
 
-## `r advdate(mon, 9)`: Selection Models (Part II); Marginal Treatment Effects, LATE, and "Monotonicity"
-
+## `r advdate(mon, 9)`: Selection Models (Part II); Marginal Treatment Effects and LATE
+What does IV estimate under essential heterogeneity? Deriving the IV weights. Violations of "monotonicity". 
 
 _Required Readings_
 
 - @Heckman2006c
 - @Heckman2007b
 - @Kline2019
+- @Das2003
 
 
 _Optional Readings_
@@ -164,7 +183,7 @@ _Optional Readings_
 - @Arnold2018
 
 ## `r advdate(mon, 10)`: Applications; MTEs and LATE in Practice
-
+Semiparametric approaches to control funtion estimation. Partial equivalence to IV. Richer treatment spaces: ordered and unordered selection. Applications.
 
 _Required Readings_
 
@@ -180,6 +199,8 @@ _Optional Readings_
 - @Carneiro2011
 
 ## `r advdate(mon, 11)`: Synthetic Panels and Diff-in-Diff
+An additively separable model for $Y_0$ and the parallel trends assumption. Pitfalls: heterogeneous trends and serially correlated shocks. Placebo tests and placebo outcomes (DDD); clustering and bootstrapping standard errors.
+
 
 _Required Readings_
 
@@ -198,6 +219,7 @@ _Optional Readings_
 - @Muralidharan2017a
 
 ## `r advdate(mon, 12)`: Individual-Level Panel Data (Part I)
+The incidental parameters problem (again). Complications: lagged dependent variables and serial correlation. Applications to the effects of job loss on workers and life-cycle labor supply.
 
 _Required Readings_
 
@@ -213,18 +235,23 @@ _Optional Readings_
 - @Topel1991; @Acemoglu1999
 
 ## `r advdate(mon, 13)`: Individual-Level Panel Data, Part II - Mover Designs
+Wide-panel vs long-panel asymptotics. Multiple unordered treatments in the selection equation. Applications to medical spending and worker-firm matching.
 
 _Required Readings_
 
-- @Finkelstein2016; @Finkelstein2018b
+- @Finkelstein2016
+- @Finkelstein2018b
 - @Hull2018a
 
 _Optional Readings_
 
-- @Abowd1999; @Borovickova2017; @Song2018
+- @Abowd1999
+- @Borovickova2017
+- @Song2018
 - @Heckman2018
 
 ## `r advdate(mon, 14)`: Individual-Level Panel Data, Part III - Event Studies
+"Dynamic treatment effects" and long-panel asymptotics. Applications to local differences in retail prices and human capital accumulation over the life-cycle.
 
 _Required Readings_
 
@@ -236,14 +263,15 @@ _Required Readings_
 _Optional Readings_
 
 - @Allcott2018
-- @Lagakos2018a; @Lagakos2018; @Hendricks2002; @Hendricks2018
-- @Fama1969
+- @Lagakos2018a; @Lagakos2018
+- @Hendricks2002; @Hendricks2018
 - @Atkin2016
 - @Atkin2018
 
 ## `r advdate(mon, 15)`: Discussion of Applied Papers
+Student discussion of applied papers. 
 
 ## `r advdate(mon, 16)`: Discussion of Applied Papers
-
+Student discussion of applied papers. 
 
 # References

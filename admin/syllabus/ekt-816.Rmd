@@ -55,6 +55,9 @@ myopts <- BibOptions(bib.style = "authoryear", style="latex", first.inits=FALSE,
 
 This is a graduate course in econometrics. Our goal is to learn some basic techniques that economists use to establish causal claims. An immediate payoff is that you will be able to read and evaluate empirical research. You may also find these methods useful in your own work.
 
+## Prerequisites
+You need a working knowledge of calculus and linear algebra. Previous exposure to statistics is helpful but not essential.
+
 # Required Texts
 There are two required texts:
 
@@ -92,7 +95,7 @@ Potential outcomes notation. Randomization delivers the ATE; brief aside on SUTV
 
 _Required Readings_
 
-- @Angrist1999
+- @Angrist1999; @Dinardo2011
 - @Heckman1995; @Card2011; 
 - @Aron-Dine2012; @Muralidharan2017b
 - @Angrist2010a; @Keane2010; @Keane2010a
@@ -160,7 +163,8 @@ _Required Readings_
 - @Bound1995
 - @Stock2010
 - @Andrews2018
-- @Eisenhauer2015a
+- @Heckman1990a; @Eisenhauer2015a
+- @Heckman1990
 
 ## `r advdate(mon, 8)`: Autumn Break
 No class; I will post a take-home midterm before the break.

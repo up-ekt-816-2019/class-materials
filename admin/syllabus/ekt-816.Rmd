@@ -70,7 +70,7 @@ There are two required texts:
 - @Angrist2008 
 - @Wickham2017
 
-@Wickham2017 is available free online, so you shouldn't buy it. You may also find it useful to refer to these texts:
+@Wickham2017 is available free online, so you shouldn't buy it. A few copies of @Angrist2008 are available at the campus bookstore; I haven't checked at the off-campus ones. You may also find it useful to refer to these texts:
 
 - @Stachurski2016
 - @Wooldridge2010
@@ -79,6 +79,8 @@ There are two required texts:
 - @Paarsch2016
 
 Of these, @Deaton1997 is available for free in PDF format from [the World Bank's website](http://documents.worldbank.org/curated/en/593871468777303124/The-Analysis-of-Household-Surveys-A-Microeconometric-Approach-to-Development-Policy), and Stachurski has posted many lecture slides and other supporting materials to his [website](http://johnstachurski.net/emet.html). Although we will not refer explicitly to @Paarsch2016 often, it will be useful for the computational parts of the course (and indeed for those parts of your own research that require computation). 
+
+Other than @Wickham2017, I have asked the library to place these on reserve.
 
 # Assessment
 There will be 6 problem sets, a take-home exam, and a midterm (also take-home).
@@ -256,12 +258,12 @@ _Required Readings: The Relationship Between IV and Selection Models_
 - @Das2003
 
 
-_Optional Readings: Interpreting the LATE_
+_Optional Readings: Interpreting the LATE, External Validity and Mechanisms_
 
 - @Deaton2010
 - @Imbens2010
 
-_Optional Readings: Applications to Criminal Justice; "Neighborhood Effects" of Public Housing_
+_Optional Readings: Applications to Criminal Justice Policy; "Neighborhood Effects" of Public Housing_
 
 - @Chyn2018
 - @Mueller-Smith2015
@@ -317,16 +319,15 @@ The incidental parameters problem (again). Complications: lagged dependent varia
 _Required Readings: The Effects of Job Loss_
 
 - @Ashenfelter1985
-- @MaCurdy1981
 - @Jacobson1993
 - @Griliches1986
 
 _Optional Readings: Dynamic Labor Supply; Rent Control_
 
 - @Diamond2018
-- @Macurdy2007
 - @Topel1991
 - @Acemoglu1999
+- @Macurdy2007; @MaCurdy1981
 
 ## `r advdate(mon, 13)`: Individual-Level Panel Data, Part II - Mover Designs
 Wide-panel vs long-panel asymptotics. Multiple unordered treatments in the selection equation. Applications to medical spending and worker-firm matching.

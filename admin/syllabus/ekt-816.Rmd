@@ -83,7 +83,12 @@ Of these, @Deaton1997 is available for free in PDF format from [the World Bank's
 Other than @Wickham2017, I have asked the library to place these on reserve.
 
 # Assessment
-There will be 6 problem sets, a take-home exam, and a midterm (also take-home).
+There will be 6 problem sets, a take-home exam, and a midterm (also take-home). Your final grade will be a weighted average of your performance on each of these, with the weights being either:
+
+- 20\% problem sets + 20\% midterm + 60\% final, or
+- 25\% problem sets + 25\% midterm + 50\% final,
+
+whichever is in your favor.
 
 # Class Schedule
 

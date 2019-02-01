@@ -1,8 +1,11 @@
+# R history
+admin/syllabus/.Rhistory
+
 # test documents for RMarkdown
 R-support/
 
 # class list, grades, etc (specific to each year)
-admin/*.csv
+class-*/
 
 # problem sets (each gets its own repo)
 problem-sets/

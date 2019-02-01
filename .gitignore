@@ -1,2 +1,8 @@
 # test documents for RMarkdown
 R-support/
+
+# class list, grades, etc (specific to each year)
+admin/*.csv
+
+# problem sets (each gets its own repo)
+problem-sets/

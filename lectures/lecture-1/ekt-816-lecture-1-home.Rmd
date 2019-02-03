@@ -1,0 +1,195 @@
+---
+title: EKT-816 Lecture 1
+subtitle: Probability Review (1)
+author: Jesse Naidoo
+institute: University of Pretoria
+fontsize: 10pt
+output:
+ beamer_presentation:
+    template: /Users/jesse/Dropbox/home/templates/svm-latex-beamer.tex
+    keep_tex: false
+    incremental: true
+#    toc: false 
+    slide_level: 2
+ ioslides_presentation:
+    smaller: true
+make149: true
+bibliography: /Users/jesse/Dropbox/home/library.bib
+biblio-style: authordate1
+header-includes: |
+    \DeclareMathOperator*\plim {plim}
+    \DeclareMathOperator*\cov {cov}
+---
+
+<style>
+slides > slide.backdrop {
+  background: white;
+  border-bottom: 0px;
+  box-shadow: 0 0 0;
+}
+
+
+slides > slide {
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  border-bottom: 3px solid  #F66733;
+  box-shadow:  0 3px 0 #522D80;
+
+}
+
+.title-slide hgroup h1 {
+  color: #522D80;
+}
+
+
+
+h2 {
+
+  color: #522D80;
+}
+
+slides > slide.dark {
+  background: #522D80 !important;
+  border-bottom: 0;
+  box-shadow: 0 0 0;
+}
+
+.segue h2 {
+  color: white;
+}
+
+slides > slide.title-slide {
+  border-bottom: 0;
+  box-shadow: 0 0 0;
+}
+
+ol, ul {
+
+padding-bottom: 10px;
+
+}
+
+</style>
+
+
+# Univariate Distributions
+
+## PDFs, CDFs, and Quantiles
+
+- Discrete distribution:
+  - mass functions: $f(x) = P(X = x)$. 
+  - cumulative distribution functions: $F(x) = P(X \leq x)$. 
+  - Examples: Bernoulli$(p)$; binomial$(n,p)$; Poisson$(\lambda)$.
+- continuous distributions:
+  - density function $f_X(x)$ such that
+    $$
+    \int^\infty_{-\infty}\!\!f_X(x)dx = 1.
+    $$
+  - CDF $F_X(x)$ is increasing and such that $\lim_{x\rightarrow -\infty} F_X(x) = 0$, $\lim_{x\rightarrow \infty}F_X(x) = 1$.
+  - $F'_X(x) = f_X(x)$, or
+    $$
+    F_X(x) = \int^x_{-\infty}\!\! f_X(t)dt
+    $$
+- the $\tau$-th quantile of the distribution $F$ is the value $x_\tau$ such that
+  $$
+  F(x_{\tau}) = \tau
+  $$
+
+## Moments
+
+- the _mean_ of a distribution is 
+  $$
+  E[X] = \int_{-\infty}^\infty\!\! xf_X(x)dx
+  $$
+- the _variance_ of the distribution is 
+  $$
+  V[X] = E[(X - \mu)^2]
+  $$
+  where $\mu$ is the mean of the distribution
+- note, these moments may not exist!
+    - but, if $V[X] < \infty$, the mean will exist (why?) 
+    - also notice that $V[X] = E[X^2] - E[X]^2$
+    - third (centered) moment is called _skewness_
+    - fourth (centered) moment is called _kurtosis_
+
+## Example: Pareto Distributions
+
+- let $\alpha > 0$ be some constant
+- density is 
+  $$
+  f_X(x) = \left\{\begin{array}{ll} \alpha x^{-(\alpha+1)} & \text{if } x > 1 \\ 0 & \text{else} \end{array}\right.
+  $$
+    - what is the CDF, $F_X(x)$?
+    - what is the mean, $E[X]$? do we have to impose any conditions to ensure the mean exists?
+    - what is the variance, $V[X]$?
+
+## Inverse CDF Trick
+
+- suppose we want to generate random numbers from some distribution with CDF $F$
+  - we can compute $F$ and $F^{-1}$
+  - we can generate uniformly distributed random numbers, $U \sim U(0,1)$
+- then, you can generate $X \sim F$ as follows:
+  $$
+  X = F^{-1}(U)
+  $$
+- proof: let's find the CDF of such $X$s. 
+  - let $x$ be an arbitrary number; we're going to show that $P(X \leq x) = F(x)$
+  - $P(X \leq x) = P(F^{-1}(U) \leq x) = P(U \leq F(x)) = F(x)$
+
+# Joint Distributions
+
+## Marginal and Conditional Distributions
+
+- take a joint density $f_{XY}(x,y)$ that integrates to 1 over $\mathbb{R}^2$
+  - the marginal density of $X$ is
+    $$
+    f_X(x) = \int^\infty_{-\infty} \!\! f_{XY}(x,y)dy
+    $$
+  - analogous for marginal of $Y$
+- the _conditional_ density of $Y$ _given that_ $X = x$ is
+  $$
+  f_{Y|X}(y|X = x) = \frac{f_{XY}(x, y)}{f_X(x)}
+  $$
+
+## Basic Rules
+
+- expectations are linear: $E[aX + Y] = aE[X] + E[Y]$
+- $V[aX] = a^2V[X]$
+- $V[X+Y] = V[X] + V[Y] + 2\cov(X,Y)$
+
+## Example: Zero Correlation, But Not Independent
+
+- consider the following distribution:
+        \begin{eqnarray}
+        f_{XY}(x,y) & = & \left\{\begin{array}{ll}3/4 & \text{ if } x \in (-1,1) \text{ and } y \in (0, 1-x^2)\\ 0 & \text{otherwise} \end{array}\right.
+        \end{eqnarray}
+- show that $\cov(X,Y) = 0$ 
+  - yet, the two are not independent!
+  - to see this, compute the conditional expectation $E[Y|X]$
+
+## Law of Iterated Expectations and Variance Decomposition
+
+- law of iterated expectations: 
+  $$
+  E[E[Y|X]] = E[Y]
+  $$
+- variance decomposition: 
+  $$
+  V[Y] = V[E[Y|X]] + E[V[Y|X]]
+  $$
+
+
+## Example: Censored Normal Distribution
+
+# Classical (Frequentist) Estimation
+
+## Classical Statistical Paradigm
+
+## Modes of Convergence
+
+## Law(s) of Large Numbers
+
+## Central Limit Theorems
+
+## Desirable Properties of Estimators
+
+## References

@@ -4,8 +4,8 @@ output:
     keep_tex: false
     fig_caption: yes
     latex_engine: pdflatex
-    template: /Users/jnaidoo/Dropbox/office/templates/svm-latex-syllabus.tex
-bibliography: /Users/jnaidoo/Dropbox/office/library.bib
+    template: ../../../../../templates/svm-latex-syllabus.tex
+bibliography: ../../../../../library.bib
 biblio-style: authordate1
 geometry: margin=1in
 
@@ -14,7 +14,7 @@ author: Jesse Naidoo
 date: "Semester 1, 2019"
 
 email: "jesse.naidoo@up.ac.za"
-# web: "svmiller.com/teaching"
+web: "github.com/up-ekt-816-2019"
 officehours: "TBD"
 office: "Tukkiewerf 2-23"
 classroom: "Tukkiewerf 1-37"
@@ -46,7 +46,7 @@ advdate <- function(obj, adv) {
 library(RefManageR)
 # library(knitcitations)
 # library(rcrossref)
-bib <- ReadBib("~/Dropbox/office/library.bib")
+bib <- ReadBib("../../../../../library.bib")
 myopts <- BibOptions(bib.style = "authoryear", style="latex", first.inits=FALSE, max.names = 20)
 
 ```
@@ -83,7 +83,12 @@ Of these, @Deaton1997 is available for free in PDF format from [the World Bank's
 Other than @Wickham2017, I have asked the library to place these on reserve.
 
 # Assessment
-There will be 6 problem sets, a take-home exam, and a midterm (also take-home).
+There will be 6 problem sets, a take-home exam, and a midterm (also take-home). Your final grade will be a weighted average of your performance on each of these, with the weights being either:
+
+- 20\% problem sets + 20\% midterm + 60\% final, or
+- 25\% problem sets + 25\% midterm + 50\% final,
+
+whichever is in your favor.
 
 # Class Schedule
 

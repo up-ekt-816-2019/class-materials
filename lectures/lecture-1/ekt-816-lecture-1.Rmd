@@ -6,7 +6,7 @@ institute: University of Pretoria
 fontsize: 10pt
 output:
  beamer_presentation:
-    template: /Users/jesse/Dropbox/home/templates/svm-latex-beamer.tex
+    template: ../../../../../templates/svm-latex-beamer.tex
     keep_tex: false
     incremental: true
 #    toc: false 
@@ -14,7 +14,7 @@ output:
  ioslides_presentation:
     smaller: true
 make149: true
-bibliography: /Users/jesse/Dropbox/home/library.bib
+bibliography: ../../../../../library.bib
 biblio-style: authordate1
 header-includes: |
     \DeclareMathOperator*\plim {plim}

@@ -95,22 +95,22 @@ whichever is in your favor.
 Please read at least the prescribed readings before class, even if you find it hard to follow everything; it makes for a more productive discussion if you have figured out the easy stuff first.
 
 ## `r advdate(mon, 1)`: Probability and Statistics Review; Introduction to R
-Distributions, expectations, quantiles. Laws of large numbers and the central limit theorem. Estimation: mean square error vs bias. 
+Distributions, expectations, quantiles. Laws of large numbers and the central limit theorem. Consistency and precision in estimation. Monte Carlo simulations.
 
 _Required Readings_
 
 - @Wickham2017, Ch. 3-6; 8; 26-30
 
-_Practicals:_ Basic data manipulation in the tidyverse. R Markdown. github setup and workflow.
+_Practicals:_ Basic data exploration and plotting in the tidyverse. R Markdown. github setup and workflow.
 
 ## `r advdate(mon, 2)`: Probability and Statistics Review (continued)
-Sufficient and ancilliary statistics. Consistency and precision in estimation. Weighting and sample design. Identification. Hypothesis testing: size vs power.
+Estimation: mean square error vs bias. Sufficient statistics. Hypothesis testing: size vs power. Weighting and sample design. Identification. 
 
 _Required Readings_
 
-- @Wickham2017, Ch. 17-21
+- @Wickham2017, Ch. 12-13; 18; 21.
 
-_Practicals:_ Pipes, iteration. Monte Carlo simulations.
+_Practicals:_ More data manipulation: grouped summaries, reshaping data, and merging (joining) datasets. Pipes, iteration. 
 
 ## `r advdate(mon, 3)`: Counterfactuals and Causal Inference
 Potential outcomes notation. Randomization delivers the ATE; brief aside on SUTVA, peer effects and general equilibrium. Examples of causal claims. Internal and external validity, and the value of understanding mechanisms. 

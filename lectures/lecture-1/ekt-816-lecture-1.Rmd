@@ -177,19 +177,92 @@ padding-bottom: 10px;
   V[Y] = V[E[Y|X]] + E[V[Y|X]]
   $$
 
-
-## Example: Censored Normal Distribution
-
 # Classical (Frequentist) Estimation
 
 ## Classical Statistical Paradigm
 
+- sample data $X_1, \ldots X_n$ are draws from some _data-generating process_ $f(x|\theta)$
+  - $\theta$: a vector of parameters - unknown to us
+  - our goal is to learn about $\theta$ from the sample
+- a _statistic_ is any function of the data (or _known_ parameters)
+  - as such, they are themselves random variables 
+  - and, they have a distribution
+  - which we would like to characterize as much as possible
+- why do we care about this? want to answer two questions
+  - Given enough data, will our estimate "eventually" get "close" to $\theta_0$?
+  - For any fixed sample, how "close" is our estimate "likely" to be to the truth $\theta_0$?
+- asymptotic theory is useful because it allows us to answer these questions using a precise meaning for the words "close", "eventually", and "likely"
+
+
 ## Modes of Convergence
+
+- $(X_n)_{n=1}^\infty$ converges _in probability_ to the random variable $X$ if for all $\varepsilon > 0$,
+        \begin{eqnarray}
+        \lim_{n\rightarrow\infty}P(|X_n - X| > \varepsilon) & = & 0
+        \end{eqnarray}
+    - We write $X_n \longrightarrow_p X$ as shorthand. 
+- $(X_n)_{n=1}^\infty$ converges \emph{in mean square} to the random variable $X$ if
+        \begin{eqnarray}
+        \lim_{n\rightarrow\infty}E[(X_n - X)^2] & = & 0
+        \end{eqnarray}
+    - We write $X_n \longrightarrow_{m.s.} X$ as shorthand.
+- Convergence in mean square implies convergence in probability, but _not_ vice versa
 
 ## Law(s) of Large Numbers
 
+- consider $(X_i)_{i=1}^{\infty}$ i.i.d. with mean $\mu$ and variance $\sigma^2$
+  - let $\overline{X}_n = n^{-1}\sum^n_{k=1}X_k$
+  - $V[\overline{X}_n] = n^{-1}\sigma^2$, so $\overline{X}_n \longrightarrow_{m.s.} 0$
+  - thus, $\overline{X}_n \longrightarrow_p 0$ also
+- we say "the sample mean is _consistent_ for the population mean"
+- consistency is a necessary condition for an estimator to be useful
+  - if you're never going to get the truth out of this calculation, why bother?
+
 ## Central Limit Theorems
 
-## Desirable Properties of Estimators
+- besides consistency we would like to know about the _precision_ of our estimates
+  - it is good to know that we get to the truth "eventually", but how close are we right now?
+  - we need a different notion of convergence to characterize the asymptotic approximation here
+- _convergence in distribution_: we say $(X_n)_{n=1}^\infty \longrightarrow_d X$ if,
+  - for every point $a$ where $F_X(\cdot)$ is continuous, $P(X_n \leq a) \longrightarrow P(X \leq a)$
+- _Central Limit Theorem_: 
+    - if $(X_i)_{i=1}^\infty$ is an i.i.d. sample from a distribution with $V[X] = \sigma^2 < \infty$ and $E[X]  = \mu$, then 
+        \begin{eqnarray}
+        \sqrt{n}\left(\frac{n^{-1}\sum^n_{k=1}X_k - \mu}{\sigma}\right) & \longrightarrow_d & N(0,1)
+        \end{eqnarray}
+    - this suggests we may use the approximation
+        \begin{eqnarray}
+        P(\overline{X}_n \leq a) & \approx & \Phi\left(\frac{a - \mu}{\sigma/\sqrt{n}}\right)
+        \end{eqnarray}
+
+## Monte Carlo Simulations
+
+- we need a way to examine the sampling distribution of some estimator $\widehat{\theta}(X_1, \ldots X_n)$
+  - except for special cases (e.g. the mean of normal observations), we will not be able to calculate the distribution of a general function of the data for arbitrary sample sizes
+- solution: approximate the distribution of $\widehat{\theta}(X_1, \ldots X_n)$ by simulating some large number of datasets (each of size $n$)
+- pseudocode:
+  - $B$ is number of simulated datasets
+  - for each $b = 1, \ldots B$ we generate a dataset of size $n$; compute $\widehat{\theta}_{n,b}$
+  - treat the resulting sample $\widehat{\theta}_{n,1}, \widehat{\theta}_{n,2}, \ldots \widehat{\theta}_{n,B}$ as the population distribution
+
+## Monte Carlo Simulations
+
+```
+for n = 10, 100, 1000, 10000 {
+   for b = 1, ... B {
+```
+\par\hspace{10mm}\texttt{draw } $X_1 \ldots X_n$ \texttt{ from } $f(X|\theta_0)$\texttt{;}
+\par\hspace{10mm}\texttt{calculate } $\widehat{\theta}_{n,b}$ \texttt{ from } $X_1 \ldots X_n$\texttt{;}
+\par\hspace{10mm}\texttt{store } $\widehat{\theta}_{n,b}$\texttt{;}
+\par\hspace{10mm}\texttt{discard } $X_1 \ldots X_n$\texttt{;} 
+```
+   }
+}
+```
+
+- then, using $\widehat{\theta}_{n,1}, \widehat{\theta}_{n,2}, \ldots \widehat{\theta}_{n,B}$:
+  - plot the density of $(\widehat{\theta}_{n,b})_{b=1}^B$ for $n = 10, 100, 1000, 10000$
+  - compute the variance of $(\widehat{\theta}_{n,b})_{b=1}^B$ for $n = 10, 100, 1000, 10000$
+  - etc.
 
 ## References

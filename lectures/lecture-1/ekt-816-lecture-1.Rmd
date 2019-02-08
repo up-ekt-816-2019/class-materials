@@ -8,7 +8,7 @@ output:
  beamer_presentation:
     template: ../../../../../templates/svm-latex-beamer.tex
     keep_tex: false
-    incremental: true
+    incremental: true 
 #    toc: false 
     slide_level: 2
  ioslides_presentation:
@@ -76,20 +76,20 @@ padding-bottom: 10px;
 ## PDFs, CDFs, and Quantiles
 
 - Discrete distribution:
-  - mass functions: $f(x) = P(X = x)$. 
-  - cumulative distribution functions: $F(x) = P(X \leq x)$. 
-  - Examples: Bernoulli$(p)$; binomial$(n,p)$; Poisson$(\lambda)$.
+    - mass functions: $f(x) = P(X = x)$. 
+    - cumulative distribution functions: $F(x) = P(X \leq x)$. 
+    - Examples: Bernoulli$(p)$; binomial$(n,p)$; Poisson$(\lambda)$.
 - continuous distributions:
-  - density function $f_X(x)$ such that
+    - density function $f_X(x)$ such that
     $$
     \int^\infty_{-\infty}\!\!f_X(x)dx = 1.
     $$
-  - CDF $F_X(x)$ is increasing and such that $\lim_{x\rightarrow -\infty} F_X(x) = 0$, $\lim_{x\rightarrow \infty}F_X(x) = 1$.
-  - $F'_X(x) = f_X(x)$, or
+    - CDF $F_X(x)$ is increasing and such that $\lim_{x\rightarrow -\infty} F_X(x) = 0$, $\lim_{x\rightarrow \infty}F_X(x) = 1$.
+    - $F'_X(x) = f_X(x)$, or
     $$
     F_X(x) = \int^x_{-\infty}\!\! f_X(t)dt
     $$
-- the $\tau$-th quantile of the distribution $F$ is the value $x_\tau$ such that
+    - the $\tau$-th quantile of the distribution $F$ is the value $x_\tau$ such that
   $$
   F(x_{\tau}) = \tau
   $$
@@ -132,19 +132,19 @@ padding-bottom: 10px;
   X = F^{-1}(U)
   $$
 - proof: let's find the CDF of such $X$s. 
-  - let $x$ be an arbitrary number; we're going to show that $P(X \leq x) = F(x)$
-  - $P(X \leq x) = P(F^{-1}(U) \leq x) = P(U \leq F(x)) = F(x)$
+    - let $x$ be an arbitrary number; we're going to show that $P(X \leq x) = F(x)$
+    - $P(X \leq x) = P(F^{-1}(U) \leq x) = P(U \leq F(x)) = F(x)$
 
 # Joint Distributions
 
 ## Marginal and Conditional Distributions
 
 - take a joint density $f_{XY}(x,y)$ that integrates to 1 over $\mathbb{R}^2$
-  - the marginal density of $X$ is
+    - the marginal density of $X$ is
     $$
     f_X(x) = \int^\infty_{-\infty} \!\! f_{XY}(x,y)dy
     $$
-  - analogous for marginal of $Y$
+    - analogous for marginal of $Y$
 - the _conditional_ density of $Y$ _given that_ $X = x$ is
   $$
   f_{Y|X}(y|X = x) = \frac{f_{XY}(x, y)}{f_X(x)}
@@ -163,8 +163,8 @@ padding-bottom: 10px;
         f_{XY}(x,y) & = & \left\{\begin{array}{ll}3/4 & \text{ if } x \in (-1,1) \text{ and } y \in (0, 1-x^2)\\ 0 & \text{otherwise} \end{array}\right.
         \end{eqnarray}
 - show that $\cov(X,Y) = 0$ 
-  - yet, the two are not independent!
-  - to see this, compute the conditional expectation $E[Y|X]$
+    - yet, the two are not independent!
+    - to see this, compute the conditional expectation $E[Y|X]$
 
 ## Law of Iterated Expectations and Variance Decomposition
 
@@ -182,16 +182,17 @@ padding-bottom: 10px;
 ## Classical Statistical Paradigm
 
 - sample data $X_1, \ldots X_n$ are draws from some _data-generating process_ $f(x|\theta)$
-  - $\theta$: a vector of parameters - unknown to us
-  - our goal is to learn about $\theta$ from the sample
+    - $\theta$: a vector of parameters - unknown to us
+    - our goal is to learn about $\theta$ from the sample
 - a _statistic_ is any function of the data (or _known_ parameters)
-  - as such, they are themselves random variables 
-  - and, they have a distribution
-  - which we would like to characterize as much as possible
+    - as such, they are themselves random variables 
+    - and, they have a distribution
+    - which we would like to characterize as much as possible
 - why do we care about this? want to answer two questions
-  - Given enough data, will our estimate "eventually" get "close" to $\theta_0$?
-  - For any fixed sample, how "close" is our estimate "likely" to be to the truth $\theta_0$?
-- asymptotic theory is useful because it allows us to answer these questions using a precise meaning for the words "close", "eventually", and "likely"
+    - Given enough data, will our estimate "eventually" get "close" to $\theta_0$?
+    - For any fixed sample, how "close" is our estimate "likely" to be to the truth $\theta_0$?
+- asymptotic theory is useful because it allows us to answer these questions 
+    - using a precise meaning for the words "close", "eventually", and "likely"
 
 
 ## Modes of Convergence
@@ -211,20 +212,20 @@ padding-bottom: 10px;
 ## Law(s) of Large Numbers
 
 - consider $(X_i)_{i=1}^{\infty}$ i.i.d. with mean $\mu$ and variance $\sigma^2$
-  - let $\overline{X}_n = n^{-1}\sum^n_{k=1}X_k$
-  - $V[\overline{X}_n] = n^{-1}\sigma^2$, so $\overline{X}_n \longrightarrow_{m.s.} 0$
-  - thus, $\overline{X}_n \longrightarrow_p 0$ also
+    - let $\overline{X}_n = n^{-1}\sum^n_{k=1}X_k$
+    - $V[\overline{X}_n] = n^{-1}\sigma^2$, so $\overline{X}_n \longrightarrow_{m.s.} 0$
+    - thus, $\overline{X}_n \longrightarrow_p 0$ also
 - we say "the sample mean is _consistent_ for the population mean"
 - consistency is a necessary condition for an estimator to be useful
-  - if you're never going to get the truth out of this calculation, why bother?
+    - if you're never going to get the truth out of this calculation, why bother?
 
 ## Central Limit Theorems
 
 - besides consistency we would like to know about the _precision_ of our estimates
-  - it is good to know that we get to the truth "eventually", but how close are we right now?
-  - we need a different notion of convergence to characterize the asymptotic approximation here
+    - it is good to know that we get to the truth "eventually", but how close are we right now?
+    - we need a different notion of convergence to characterize the asymptotic approximation here
 - _convergence in distribution_: we say $(X_n)_{n=1}^\infty \longrightarrow_d X$ if,
-  - for every point $a$ where $F_X(\cdot)$ is continuous, $P(X_n \leq a) \longrightarrow P(X \leq a)$
+    - for every point $a$ where $F_X(\cdot)$ is continuous, $P(X_n \leq a) \longrightarrow P(X \leq a)$
 - _Central Limit Theorem_: 
     - if $(X_i)_{i=1}^\infty$ is an i.i.d. sample from a distribution with $V[X] = \sigma^2 < \infty$ and $E[X]  = \mu$, then 
         \begin{eqnarray}

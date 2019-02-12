@@ -1,0 +1,228 @@
+---
+title: EKT-816 Lecture 2
+subtitle: Probability Review (2)
+author: Jesse Naidoo
+institute: University of Pretoria
+fontsize: 10pt
+output:
+ beamer_presentation:
+    template: ../../../../../templates/svm-latex-beamer.tex
+    keep_tex: false
+    incremental: true
+#    toc: false 
+    slide_level: 2
+ ioslides_presentation:
+    smaller: true
+make149: true
+bibliography: ../../../../../library.bib
+biblio-style: authordate1
+header-includes: |
+    \DeclareMathOperator*\plim {plim}
+    \DeclareMathOperator*\cov {cov}
+---
+
+<style>
+slides > slide.backdrop {
+  background: white;
+  border-bottom: 0px;
+  box-shadow: 0 0 0;
+}
+
+
+slides > slide {
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  border-bottom: 3px solid  #F66733;
+  box-shadow:  0 3px 0 #522D80;
+
+}
+
+.title-slide hgroup h1 {
+  color: #522D80;
+}
+
+
+
+h2 {
+
+  color: #522D80;
+}
+
+slides > slide.dark {
+  background: #522D80 !important;
+  border-bottom: 0;
+  box-shadow: 0 0 0;
+}
+
+.segue h2 {
+  color: white;
+}
+
+slides > slide.title-slide {
+  border-bottom: 0;
+  box-shadow: 0 0 0;
+}
+
+ol, ul {
+
+padding-bottom: 10px;
+
+}
+
+</style>
+
+# Desirable Properties of Estimators
+
+- _consistency_: $\widehat{\theta}\longrightarrow_p \theta_0$
+- if $E[\widehat{\theta}] = \theta_0$ we say $\widehat{\theta}$ is _unbiased_
+- _efficiency_ or _precision_: say we have two estimators $\widehat{\theta}$ and $\widetilde{\theta}$
+    - for now assume both are unbiased
+    - if $V[\widehat{\theta}] \leq V[\widetilde{\theta}]$, say that $\widehat{\theta}$ is _more efficient_ than $\widetilde{\theta}$
+- the _mean square error_ of $\widehat{\theta}$ is MSE$(\widehat{\theta}) = E[(\widehat{\theta} - \theta_0)^2]$
+    - easy to see that MSE = $V[\widehat{\theta}] + \text{bias}^2$
+    - often a trade-off between the two criteria
+    - typically people seek unbiased estimators, but not always clear they are better in a MSE sense
+
+
+## Sufficient Statistics
+
+- suppose there is a statistic $T(X_1, \ldots X_n)$ such that the joint density factors as
+  $$
+  f(X_1, \ldots X_n, \theta) = g(T(X_1, \ldots X_n), \theta)\cdot h(X_1, \ldots X_n)
+  $$
+    - e.g. $T = \sum^n_{i=1}X_i$ for normal data with known variance
+- then, a maximum likelihood estimator must be a function of $T$
+- in fact, the _Rao-Blackwell Theorem_ says (roughly) that  any unbiased estimator which is _not_ a function of the sufficient statistic has higher variance than "necessary"
+    - more precisely, higher variance than the MLE, which hits the (Cramer-Rao) lower bound
+    - intuition: if you base estimates on irrelevant information, you are sacrificing precision
+
+## Sufficient Statistics
+
+- we will not use an explicit likelihood framework much
+    - but, the idea of "sufficiency" is still useful
+    - in some situations, all of the relevant information can be reduced to some low-dimensional summaries
+    - see @Chetty2009 and @Weyl2019 for examples of how this idea connects theory and econometrics
+- this idea also comes up in the guise of "selection (only) on observables"
+
+## Example: Sufficiency and Comparison of Estimators
+
+- say we have an iid sample of size $n$ from a $U(0, \theta_0)$ distribution
+    - the sample maximum is, in this case, sufficient for $\theta_0$
+    - in fact, can show the MLE is $\widehat{\theta} = \max\{X_1, \ldots X_n\}$
+- another estimator would be $\widetilde{\theta} = 2\overline{X}_n$
+    - this is unbiased (show this!)
+- which estimator has lower MSE? Which has lower variance?
+- to derive the distribution of the sample maximum:
+    - use the fact that $\max\{X_1, \ldots X_n\} \leq x$ if and only if each $X_i \leq x$
+    - by independence, the CDF of the sample maximum is the product of the individual CDFs
+
+
+# Weighting and Sample Design
+
+## Sample Design
+
+- some types of data you may encounter:
+    - cross-sectional:
+        - units from the population are surveyed once, and all at roughly the same time. 
+        - a "snapshot" of the population
+    - stratified or two-stage designs
+        - units are sampled randomly within certain pre-specified groups 
+        - e.g region, race, sex
+    - clustered designs
+        - often would be expensive to collect a simple random sample
+        - save on transport and labor costs by selecting clusters of units
+        - attempt to correct for the resulting correlations (why?)
+    - panel or longitudinal designs: repeated observations on the same units
+        - rotating panels, where some units are "rotated" in and out of the survey 
+        - retrospective histories 
+        - synthetic panels: aggregate individuals to form a panel at cohort level
+
+## Sample Design
+
+- panel data can overcome some problems related to unobservable variables, but
+    - they are expensive to collect
+    - differential attrition can be a serious problem
+- not all data are survey data
+    - e.g. administrative data (e.g. tax records)
+    - these sources can be much more complete and data quality can be high
+    - for work on developed countries, the current frontier in labor and public economics
+
+## Weighting
+
+- suppose we have a population of $N$ units, and we sample with unequal probabilities
+    - let $\pi_i$ be the probability that unit $i$ is selected
+    - in a simple random sample of size $n << N$, $\pi_i \approx n/N$, even if we sample without replacement
+    - but we don't always want to sample each unit with equal probability
+- let $w_i = (n\pi_i)^{-1}$ be the "design weight"; then the expected sum of the weights is
+        \begin{eqnarray}
+        E\left[\sum^n_{i=1}w_i\right] & = & E\left[\sum^N_{i=1}t_iw_i\right] \nonumber \\
+        & \approx & \sum^N_{i=1}(\pi_i n)w_i  = N
+        \end{eqnarray}
+    - here $t_i$ is the number of times unit $i$ is included in the sample
+    - if $n << N$, this is about $\pi_i n$
+    - so, the weights can be used to estimate the total size of the population
+
+## Weighting
+
+- intuition: weights are inversely proportional to the probabilities of inclusion
+    - in a 1/100 sample, each included unit represents 100 others
+- to estimate the population mean, we weight the observations by $w_i$, forming
+        \begin{eqnarray}
+        \overline{x}_w & = & \sum^n_{i=1}w_ix_i
+        \end{eqnarray}
+    - exercise: show that $E[\overline{x}_w] = E[X]$
+- we may want to deliberately oversample some groups to improve precision of conditional means
+    - e.g. white or Indian South Africans
+    - this would be true even if response rates were the same across ethnic groups!
+
+## Stratification
+
+- to understand why stratification is useful, think about trying to measure the national average of some $X$ where there are two cities
+- variance of a randomly sampled unit is 
+    $$
+    V[X_i] = p\sigma^2_1 + (1-p)\sigma^2_2 + p(\mu_1 - \mu)^2 + (1-p)(\mu_2 - \mu)^2
+    $$
+    - notice that $V[X] = E[V[X|S]] + V[E[X|S]]$
+
+## Stratification
+
+- consider a stratified design where we take two independent samples from the two strata
+    - size $n_1$ and $n_2$ respectively, with $n_1 + n_2 = n$
+    - the variance of the sample mean is
+        \begin{eqnarray}
+        V[\overline{x}^{STRAT}] & = & V\left[n^{-1}\sum^{n_1}_{i=1}x_i + n^{-1}\!\!\sum^{n}_{i = n_1+1}x_i\right] \nonumber \\
+        & = & \left(\frac{n_1}{n}\right)^2\frac{\sigma^2_1}{n_1} + \left(\frac{n_2}{n}\right)^2\frac{\sigma^2_2}{n_2}
+        \end{eqnarray}
+- say we choose $n_1/n = p$ and $n_2/n = 1-p$ 
+    - then
+      $$
+      V[\overline{x}^{STRAT}] = n^{-1}\{p\sigma^2_1 + (1-p)\sigma^2_2\} < n^{-1}V[X]
+      $$
+    - as long as the means differ ($\mu_1 \neq \mu_2$), stratification improves precision (why?)
+- notice that the motivation here is to improve precision of the overall mean
+    - how is this different to weighting?
+
+## Clustering
+
+- suppose we have several clusters, indexed by $c$
+- the distribution of the variable of interest, $X$, obeys the following:
+        \begin{eqnarray}
+        x_{ic} & = & \mu + \alpha_c + \varepsilon_{ic}
+        \end{eqnarray}
+    - here $\alpha$ and $\varepsilon$ are independent of each other, and both have mean zero
+    - let $\sigma^2_\alpha$ be the variance of the cluster-specific mean
+    - $\sigma^2_\varepsilon$ be the variance of the idiosyncratic error term $\varepsilon_{ic}$
+- the mean of sample from $k$ clusters, with $m$ units per cluster, has variance
+        \begin{eqnarray}
+        V[\overline{x}^{CLUST}] & = & \frac{\sigma^2}{km}\left\{(m-1)\rho + 1\right\}
+        \end{eqnarray}
+    - here $\sigma^2 = \sigma^2_\alpha+ \sigma^2_\varepsilon$ is the overall variance of $X$
+    - $\rho = \sigma^2_\alpha/\sigma^2$ is the intercluster correlation coefficient
+- positive correlations within a cluster reduce the precision of your estimates
+  - effectively less information from each observation from the same cluster
+  - in limiting case $\rho = 1$, the effective sample size is $k$, not $km$
+
+# Hypothesis Testing
+
+## Hypothesis Testing
+
+## References

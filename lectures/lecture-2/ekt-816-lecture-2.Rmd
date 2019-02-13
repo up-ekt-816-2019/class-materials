@@ -8,7 +8,7 @@ output:
  beamer_presentation:
     template: ../../../../../templates/svm-latex-beamer.tex
     keep_tex: false
-    incremental: true
+    incremental: false 
 #    toc: false 
     slide_level: 2
  ioslides_presentation:
@@ -187,13 +187,12 @@ padding-bottom: 10px;
     V[X_i] = p\sigma^2_1 + (1-p)\sigma^2_2 + p(\mu_1 - \mu)^2 + (1-p)(\mu_2 - \mu)^2
     $$
     - notice that $V[X] = E[V[X|S]] + V[E[X|S]]$
-- the idea of stratification is to turn one sample into two independent ones
+- a _stratified_ design is one where we take two independent samples from the two strata
+    - we turn one sample into two independent ones
     - by exploiting the known drivers of heterogeneity, you can improve precision
 
 ## Stratification
-
-- consider a stratified design where we take two independent samples from the two strata
-    - size $n_1$ and $n_2$ respectively, with $n_1 + n_2 = n$
+- say we take subsamples of size $n_1$ and $n_2$ respectively, with $n_1 + n_2 = n$
     - the variance of the sample mean is
         \begin{eqnarray}
         V[\overline{x}^{STRAT}] & = & V\left[n^{-1}\sum^{n_1}_{i=1}x_i + n^{-1}\!\!\sum^{n}_{i = n_1+1}x_i\right] \nonumber \\
@@ -205,6 +204,9 @@ padding-bottom: 10px;
       V[\overline{x}^{STRAT}] = n^{-1}\{p\sigma^2_1 + (1-p)\sigma^2_2\} < n^{-1}V[X]
       $$
     - as long as the means differ ($\mu_1 \neq \mu_2$), stratification improves precision (why?)
+- you can show that with several strata:
+    - the optimal allocation sets $n_s/n$ proportional to $p_s\sigma_s$
+    - this is called _Neyman allocation_
 - notice that the motivation here is to improve precision of the overall mean
     - how is this different to weighting?
 

@@ -8,7 +8,7 @@ output:
  beamer_presentation:
     template: ../../../../../templates/svm-latex-beamer.tex
     keep_tex: false
-    incremental: false
+    incremental: true
 #    toc: false 
     slide_level: 2
  ioslides_presentation:
@@ -179,11 +179,16 @@ padding-bottom: 10px;
 ## Stratification
 
 - to understand why stratification is useful, think about trying to measure the national average of some $X$ where there are two cities
-- variance of a randomly sampled unit is 
+    - a fraction $p$ lives in city 1
+    - the mean and variance of $X$ (say, income) are $\mu_1$ and $\sigma^2_1$ in city 1
+    - let $\mu = p\mu_1 + (1-p)\mu_2$ be the national average
+- the variance of a randomly sampled unit is 
     $$
     V[X_i] = p\sigma^2_1 + (1-p)\sigma^2_2 + p(\mu_1 - \mu)^2 + (1-p)(\mu_2 - \mu)^2
     $$
     - notice that $V[X] = E[V[X|S]] + V[E[X|S]]$
+- the idea of stratification is to turn one sample into two independent ones
+    - by exploiting the known drivers of heterogeneity, you can improve precision
 
 ## Stratification
 

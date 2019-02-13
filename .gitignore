@@ -1,6 +1,9 @@
 # R history
 admin/syllabus/.Rhistory
 
+# temporary files from vi
+*.swp
+
 # test documents for RMarkdown
 R-support/
 

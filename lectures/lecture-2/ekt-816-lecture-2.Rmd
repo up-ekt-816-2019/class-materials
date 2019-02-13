@@ -8,7 +8,7 @@ output:
  beamer_presentation:
     template: ../../../../../templates/svm-latex-beamer.tex
     keep_tex: false
-    incremental: true
+    incremental: false
 #    toc: false 
     slide_level: 2
  ioslides_presentation:
@@ -71,6 +71,8 @@ padding-bottom: 10px;
 </style>
 
 # Desirable Properties of Estimators
+
+## Desirable Properties of Estimators
 
 - _consistency_: $\widehat{\theta}\longrightarrow_p \theta_0$
 - if $E[\widehat{\theta}] = \theta_0$ we say $\widehat{\theta}$ is _unbiased_
@@ -224,5 +226,48 @@ padding-bottom: 10px;
 # Hypothesis Testing
 
 ## Hypothesis Testing
+
+- a _hypothesis_ is a subset of the parameter space
+    - if this is a single point, we say the hypothesis is _simple_
+    - e.g. $H_0: \mu = 1$
+    - otherwise, we say the hypothesis is _complex_ or _compound_
+    - e.g. $H_1: \mu \neq 1$
+- we often designate one particular hypothesis as the "null hypothesis"
+    - then, see if the data provides strong enough evidence against it
+- the frequentist approach to hypothesis testing takes parameters as fixed and the data as random
+    - thus $P(\mu = 1|X)$ makes no sense, but $P(X|\mu = 1)$ does
+    - the Bayesian approach is more intuitive here, but econometrics is overwhelmingly frequentist
+
+
+## Hypothesis Testing
+
+- to perform a _test_ of the null hypothesis we form a _test statistic_, say $\widehat{S}(X_1, \ldots X_n)$
+    - not always the estimator itself, e.g. the $t$-test
+    - then, we need to compute (at least approximately) the distribution of $\widehat{S}$ under the null
+- suppose we know the distribution of $\widehat{S}$ under $H_0$
+    - now, we can set a _rejection region_ $R$ such that $P(\widehat{S} \in R|H_0)$ is "small"
+    - given a rejection region $R$,
+      $$
+      \alpha = \max_{\theta \in H_0} P(\text{reject } H_0|\theta)
+      $$
+    is called the _size_ of the test, or the _significance level_
+    - we take the maximum over $H_0$ (in case $H_0$ is a compound hypothesis) to be conservative
+- the number
+    $$
+    \beta = P(\text{reject } H_0|\theta)
+    $$
+    is called the _power_ of the test
+
+## Hypothesis Testing
+
+- consider some extreme cases:
+    - could ignore the data and never reject: then you never make Type I errors
+    - similarly could always reject: never make Type II errors
+- in general there is a tradeoff between size and power
+- how well you can do, and how severe the tradeoff is, depends on the problem
+    - in some "ill-posed" problems, you cannot beat the trivial test
+    - i.e. ignore the data, generate a random number $U \sim U(0,1)$ and reject if $U < \alpha$
+    - these pathologies often arise when there are "nuisance parameters" 
+    - in those cases, the requirement to keep the size of the test low imposes so many constraints you cannot have nontrivial power
 
 ## References

@@ -1,0 +1,230 @@
+---
+title: EKT-816 Lecture 3
+subtitle: Counterfactuals, Causality, and Potential Outcomes
+author: Jesse Naidoo
+institute: University of Pretoria
+fontsize: 10pt
+output:
+ beamer_presentation:
+    template: ../../../../../templates/svm-latex-beamer.tex
+    keep_tex: false
+    incremental: false 
+#    toc: false 
+    slide_level: 2
+ ioslides_presentation:
+    smaller: true
+make149: true
+bibliography: ../../../../../library.bib
+biblio-style: authordate1
+header-includes: |
+    \DeclareMathOperator*\plim {plim}
+    \DeclareMathOperator*\cov {cov}
+    \newcommand{\indep}{\perp \! \! \! \perp}
+---
+
+<style>
+slides > slide.backdrop {
+  background: white;
+  border-bottom: 0px;
+  box-shadow: 0 0 0;
+}
+
+
+slides > slide {
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  border-bottom: 3px solid  #F66733;
+  box-shadow:  0 3px 0 #522D80;
+
+}
+
+.title-slide hgroup h1 {
+  color: #522D80;
+}
+
+
+
+h2 {
+
+  color: #522D80;
+}
+
+slides > slide.dark {
+  background: #522D80 !important;
+  border-bottom: 0;
+  box-shadow: 0 0 0;
+}
+
+.segue h2 {
+  color: white;
+}
+
+slides > slide.title-slide {
+  border-bottom: 0;
+  box-shadow: 0 0 0;
+}
+
+ol, ul {
+
+padding-bottom: 10px;
+
+}
+
+</style>
+
+# Potential Outcomes and Causality
+
+## Potential Outcomes and Causality
+
+- what do we mean by "causation"?
+    - $B$ happens after $A$?
+    - $B$ and $A$ often happen together?
+- suppose we have a binary "treatment", $D$
+    - corresponding to each person $i$ there is a pair of _potential outcomes_ $(Y_i^0, Y_i^1)$
+    - the _causal effect_ or _treatment effect_ for person $i$ is $Y_i^1 - Y_i^0$
+- we only observe one of the two potential outcomes
+    - sometimes called "fundamental problem of causal inference"
+    - thus, in order to make statements about causality, we have to fill in missing data
+- the outcomes which we do not observe are called _counterfactuals_
+
+## The Selection Problem
+
+- notice that $Y = DY^1 + (1-D)Y^0$, for all individuals
+- what does a naive comparison of mean outcomes give us?
+    \begin{eqnarray*}
+    E[Y|D = 1] - E[Y|D = 0] & = & E[Y^1|D = 1] - E[Y^0|D = 0] \\
+    & = & E[Y^1|D = 1] - E[Y^1|D = 0] \\
+    & & + E[Y^1|D = 0]  - E[Y^0|D = 0] \\
+    & = & E[Y^1 - Y^0|D = 1] \\
+    & & +  E[Y^1|D = 0]  - E[Y^0|D = 0] 
+    \end{eqnarray*}
+- we call $E[Y^1 - Y^0|D = 1]$ the (average) _effect of treatment on the treated_ (ATT)
+    - similar definitions for the effect of treatment on the _untreated_ (TUT)
+    - the _average treatment effect_ (ATE) is just $E[Y^1 - Y^0]$
+- what "policy" questions do these answer?
+- the term $E[Y^1|D = 0]  - E[Y^0|D = 0]$ is called "selection bias"
+    - more specifically, it is due to selection on the _baseline_ level of $Y^0$
+
+## Examples for Discussion
+
+- what is being claimed?
+    - is it a causal statement?
+    - a statement of fact?
+    - a normative judgement?
+        - is there an implicit causal claim underlying it?
+        - if yes, would there be effects on other outcomes?
+        - might lead us to think about efficiency, equilibrium, etc.          
+    - something else?
+- if there is a causal statement being made:
+    - what is the counterfactual?
+    - is any evidence presented in favor of the claim?
+
+## Randomization Solves the Selection Problem
+
+- suppose we do an experiment, so that $D \indep (Y^1, Y^0)$
+- then our comparison of means delivers the ATE:
+    $$
+    E[Y^1|D = 1] - E[Y^0|D = 0] = E[Y^1] - E[Y^0] = E[Y^1 - Y^0]
+    $$
+- Tennessee STAR experiment
+    - affected about 11 600 children over 4 years (1985 - 1988)
+    - 3 treatments:
+        - small class (13 - 17)
+        - normal class (22 - 25) + part-time TA
+        - normal class + full-time TA
+    - Table 2.2.1: descriptive statistics
+        - do we have covariate balance?
+        - what about attrition rates?
+    - Table 2.2.2: experimental results
+
+## SUTVA, General Equilibrium and External Validity
+
+- "stable unit treatment value assumption"
+- this is actually two assumptions
+    - potential outcomes for a given individual don't depend on treatment for others
+        - earnings effects of education for a given person vs mass school construction
+        - Bill Gates' proposal to give 30% of families in rural sub-Saharan African chickens
+        - peer effects in schooling?
+        - often economists think of these as "general equilibrium effects"
+    - potential outcomes for a given individual don't depend on the way treatment was assigned
+        - voluntary migration vs kidnapping!
+        - being raised by a single parent: voluntary divorce vs spousal death vs never-married?
+        - may be able to get around some of these problems by observing other outcomes to use as instruments
+
+## Causal Mechanisms vs Treatment Effects
+
+- often, we do not just want to know "what works"
+    - also want to know _why_ it works
+- @Keane2010a gives a medical example: gastric distension from abdominal wounds
+    - belief at the time was this was due to buildup of toxicity in intestines
+    - Wangsteen's experiments showed that in fact it was just swallowed air
+    - estimated to have saved about 100,000 lives of US soldiers in WWII
+- completely naive attempts to see "what works" quickly run into combinatorial problems
+    - there are many more combinations of policies than you can run experiments for!
+    - a model (even implicit) is an essential device to fill in missing information
+        - "data and assumptions are perfect substitutes" - Charles Manski
+- of course, we want to be clear about where our conclusions come from:
+    - which facts in the data drive our estimates?
+    - under which assumptions are these facts informative about the parameters of interest?
+
+# The "Four FAQs"
+
+## The "Four FAQs"
+
+- Angrist and Pischke outline their four FAQs:
+    - 1: what is the causal relationship of interest?
+    - 2: what would be the ideal experiment?
+    - 3: what is your identification strategy?
+    - 4: what is your mode of statistical inference?
+- there is more to research than this, but:
+    -  answers to these questions are the core of a project 
+- evaluating whether given strategies are appropriate
+    - given the question
+    - given the data
+    - will be our agenda for the rest of the course
+- conversely, thinking through whether a particular strategy would deliver a credible estimate 
+    - helps you design a project
+    - helps focus attention on the biggest potential weaknesses (and how to overcome them)
+
+## What is the Causal Relationship of Interest?
+
+- not all good research is about causal relationships
+    - wage and productivity trends
+    - flow approach to labor markets
+- still, a large majority of economic research at least aims at causality
+    - might correspond to a parameter in an economic model
+        - a labor supply elasticity
+        - an elasticity of substitution (in production)
+    - might be "policy relevant"
+        - have to think carefully about external validity here
+        - would the policy change itself alter the causal relationship?
+        - e.g. is the "causal effect of schooling" a supply-side or a demand-side parameter?
+
+## What Would Be the Ideal Experiment?
+
+- example: Milgram experiment
+- racial or gender discrimination
+    - do we want to manipulate race or gender itself? or the _perception_ of race?
+    - @Goldin2000 experiment on blind auditions for orchestras
+    - resume audit studies
+- school start age and test scores
+    - if maturity has an effect (ability to sit still, concentrate), inherently confounded with age
+    - option 1: randomize start age (e.g. 6 vs 7) and test in Gr 1
+    - option 2: randomize start age but test at age 8
+    - what if you had a cohort who were _not_ in school?
+
+## What is Your Identification Strategy?
+
+- also known as: "what is the source of the identifying variation?"
+    - this will make more sense later when we discuss OLS and IV
+    - basic idea: _what, precisely, is the evidence for your causal claim?_
+- if we don't understand what aspects of the data drive the conclusions, how can we assess the credibility of the claims?
+    - if you cannot answer this clearly, no one will take your claims seriously
+
+
+## What is Your Mode of Statistical Inference?
+
+- need to quantify the precision of estimates and test hypotheses
+- with more complex research designs this can be very involved
+- when your data are clustered, grouped or aggregated, need to adjust for correlated unobservables
+
+## References

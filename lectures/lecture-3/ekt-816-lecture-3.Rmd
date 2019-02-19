@@ -8,7 +8,7 @@ output:
  beamer_presentation:
     template: ../../../../../templates/svm-latex-beamer.tex
     keep_tex: false
-    incremental: false 
+    incremental: true
 #    toc: false 
     slide_level: 2
  ioslides_presentation:

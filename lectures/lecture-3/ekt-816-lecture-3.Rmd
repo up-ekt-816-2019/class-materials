@@ -95,13 +95,13 @@ padding-bottom: 10px;
     & = & E[Y^1|D = 1] - E[Y^0|D = 1] \\
     & & + E[Y^0|D = 1]  - E[Y^0|D = 0] \\
     & = & E[Y^1 - Y^0|D = 1] \\
-    & & +  E[Y^0|D = 0]  - E[Y^0|D = 0] 
+    & & +  E[Y^0|D = 1]  - E[Y^0|D = 0] 
     \end{eqnarray*}
 - we call $E[Y^1 - Y^0|D = 1]$ the (average) _effect of treatment on the treated_ (ATT)
     - similar definitions for the effect of treatment on the _untreated_ (TUT)
     - the _average treatment effect_ (ATE) is just $E[Y^1 - Y^0]$
 - what "policy" questions do these answer?
-- the term $E[Y^1|D = 0]  - E[Y^0|D = 0]$ is called "selection bias"
+- the term $E[Y^0|D = 1]  - E[Y^0|D = 0]$ is called "selection bias"
     - more specifically, it is due to selection on the _baseline_ level of $Y^0$
 
 ## Examples for Discussion
@@ -148,7 +148,6 @@ padding-bottom: 10px;
     - potential outcomes for a given individual don't depend on the way treatment was assigned
         - voluntary migration vs kidnapping!
         - being raised by a single parent: voluntary divorce vs spousal death vs never-married?
-        - may be able to get around some of these problems by observing other outcomes to use as instruments
 
 ## Causal Mechanisms vs Treatment Effects
 

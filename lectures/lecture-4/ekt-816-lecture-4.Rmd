@@ -1,0 +1,259 @@
+---
+title: EKT-816 Lecture 4
+subtitle: Mechanical Properties of OLS
+author: Jesse Naidoo
+institute: University of Pretoria
+fontsize: 10pt
+output:
+ beamer_presentation:
+    template: ../../../../../templates/svm-latex-beamer.tex
+    keep_tex: false
+    incremental: true
+#    toc: false 
+    slide_level: 2
+ ioslides_presentation:
+    smaller: true
+make149: true
+bibliography: ../../../../../library.bib
+biblio-style: authordate1
+header-includes: |
+    \DeclareMathOperator*\plim {plim}
+    \DeclareMathOperator*\cov {cov}
+    \newcommand{\indep}{\perp \! \! \! \perp}
+---
+
+<style>
+slides > slide.backdrop {
+  background: white;
+  border-bottom: 0px;
+  box-shadow: 0 0 0;
+}
+
+
+slides > slide {
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  border-bottom: 3px solid  #F66733;
+  box-shadow:  0 3px 0 #522D80;
+
+}
+
+.title-slide hgroup h1 {
+  color: #522D80;
+}
+
+
+
+h2 {
+
+  color: #522D80;
+}
+
+slides > slide.dark {
+  background: #522D80 !important;
+  border-bottom: 0;
+  box-shadow: 0 0 0;
+}
+
+.segue h2 {
+  color: white;
+}
+
+slides > slide.title-slide {
+  border-bottom: 0;
+  box-shadow: 0 0 0;
+}
+
+ol, ul {
+
+padding-bottom: 10px;
+
+}
+
+</style>
+
+# Linear Projections
+
+## Linear Projections
+- let $(X_1, X_2)$ have some joint distribution
+- define 
+  $$
+  b = \frac{\cov(X_1, X_2)}{V[X_2]}
+  $$
+  $$
+  a = E[X_1] - bE[X_2]
+  $$
+- and let $X^*_1 = X_1 - (a+ bX_2)$
+- what is
+    - $\cov(X_1^*, X_2)$?
+    - $E[X^*_1]$
+- is $X^*_1$ _independent_ of $X_2$?
+- we say $a + bX_2$ is the _linear projection_ of $X_1$ onto $X_2$
+    - $X_1^*$ is the component of $X_1$ that is orthogonal to $X_2$
+
+# Derivation of OLS Formula
+
+## Derivation of OLS Formula
+
+- Before we talk about the statistical properties of regression estimates, we need to understand exactly what OLS does mechanically
+- given $N$ data points $(Y_i, X_{i1}, \ldots X_{iK})$, consider
+    $$
+    \min_{\beta_0, \ldots \beta_K} \sum^N_{i=1}(Y_i - \beta_0 - \beta_1X_{i1} \ldots - \beta_KX_{iK})^2 
+    $$
+    - what are the first-order conditions for this problem?
+- we can write the data in matrix form
+    - $X$ is the $N \times (K+1)$ matrix of regressors
+    - $Y$ is a $N \times 1$ vector of "outcomes"
+
+## Derivation of OLS Formula
+
+- when we do this, the FOC become
+$$
+(X'X)\hat{\beta} = X'Y \Longrightarrow \hat{\beta} = (X'X)^{-1}X'Y
+$$
+- now let
+    - $\hat{e} = Y - X\hat{\beta}$ be the residuals
+    - $M = I - X(X'X)^{-1}X'$ be the "residual maker" matrix ($N \times N$)
+        - notice that $M$ is symmetric ($M' = M$) and idempotent ($M\times M = M$)
+        - also notice that $MY = \hat{e}$ and $MX = 0$
+        - and, $X'\hat{e} = 0$, by construction
+- we can write $Y = X\hat{\beta} + \hat{e}$
+    - i.e. decomposition into predicted values + residuals
+    - these follow from facts about linear algebra, _not_ anything about causality!
+    - in fact, you could do this with purely deterministic data: no statistics necessary
+
+# Frisch-Waugh-Lovell Theorem
+
+## Frisch-Waugh-Lovell Theorem
+
+- now, suppose we have $X = [X_1 \,\, X_2]$ where $X_1$ contains a constant and $X_2$ is a single column
+    - we want to express the OLS coefficient on $X_2$ in a different way
+    - why we want to do this will become clear later
+- let $M_1 = I - X_1(X'_1X_1)^{-1}X'_1$
+    - as before, this is symmetric and idempotent
+    - further, $M_1X_1 = 0$
+    - and, $M_1\hat{e} = \hat{e} - X_1(X'_1X_1)^{-1}X'_1\hat{e} = \hat{e} - 0$
+- take our decomposition $Y = X_1\hat{\beta}_1 + X_2\hat{\beta}_2 + \hat{e}$ and premultiply by $M_1$
+    - premultiply again by $X'_2$ (check that the dimensions are appropriate!)
+    - then, we get
+    $$
+    X'_2M_1Y = X'_2M_1X_2\hat{\beta}_2
+    $$
+- use the fact that $M_1$ is symmetric and idempotent to write
+    $$
+    \hat{\beta}_2 = ((x_2^*)'(x^*_2))^{-1}((x_2^*)'Y)
+    $$
+    
+## Frisch-Waugh-Lovell Theorem
+
+- the OLS coefficient on $X_2$ is numerically identical to the one we would obtain from:
+    - regressing $X_2$ on $X_1$ and obtaining the residuals $x^*_2$
+    - regressing $Y$ on $x^*_2$
+- implications:
+    - if $X_2 \perp X_1$, we get the same coefficient on $X_2$ whether we include "controls" for $X_1$ or not
+    - as we will see, richer conditioning sets are _not_ always weakly better
+    - we can interpret "multicollinearity" as a case where the residual variation in $x^*_2$ is tiny
+
+# Examples
+
+## Wages, Experience and IQ
+
+- suppose we have a sample of workers observed at the same date
+    - we observe their wages ($w$), and the results of an IQ test ($x$)
+    - all workers in the sample were tested at the same date, say 20 years ago
+    - we also have their age in years which we encode in a vector of dummies ($D$)
+- suppose we want to estimate
+  $$
+  \log w = \alpha x + D\gamma + e
+  $$
+- suppose age has the following effects:
+    - as workers gain experience their productivity rises and employers may pay them more
+    - some cohorts differ in ability because of changes in e.g. school quality or environmental factors
+- also assume that age at testing affects measured IQ, with older kids doing better on average
+
+## Wages, Experience and IQ
+
+- does it make sense to adjust the IQ scores for age?
+    - it depends: do we want
+        - the effect of ability on wages, holding experience constant?
+        - or, the effects of experience, holding ability constant?
+- notice that all of the following regressions will give the same $\hat{\alpha}$
+    - regress $\log w$ on $\alpha x + D\gamma$ (1)
+    - regress $\log w$ on $\alpha x^* + D\gamma$ (2)
+    - regress $\log w$ on $\alpha x^*$ (3) 
+- however, the estimated _age_ effects will change
+    - consider regressing $\log w$ on $D$ alone (4) 
+    - because $x^* \perp D$ by construction, (4) gives the same $\hat{\gamma}$ as (2)
+
+## Wages, Experience and IQ
+
+- how should we interpret the age effects when we age-adjust IQ compared to raw IQ?
+    - is it possible to determine whether a given cohort earns more at a given point in time because of
+        - higher ability
+        - greater experience
+        - some combination of the two?
+- clearly, without including the IQ measure, the age coefficients pick up both effects
+- with IQ as a control, the age effects will be estimated using variation in age that is not predicted by IQ
+    - but, is this variation that is orthogonal to cohort ability?
+- example: two cohorts
+    - one is younger but smarter
+    - another is older but less able
+    - the two effects could cancel each other out so that IQ $\perp$ cohort
+
+## Wages, Experience and IQ
+
+- now, supposing that IQ $\perp D$, compare
+    - regress $\log w$ on $\alpha x + D\gamma$ (1)
+    - regress $\log w$ on $\alpha x^* + D\gamma$ (2)
+    - regress $\log w$ on $D\gamma$ (4) 
+    - regress $\log w$ on $D^*\gamma$ (5)
+- because $x \perp D$ in this example, (4) and (5) give the same estimate of $\gamma$
+    - further, (1) and (4) give the same estimate of $\gamma$ for the same reason
+    - and, we have seen (2) and (4) always give the same estimate of $\gamma$
+- we have no way of telling the difference between changes in experience and cohort ability
+- the fundamental problem is:
+    - we have no information about how measured IQ would change with the age of testing
+    - adjusting, normalizing, etc do not solve this problem!
+    - age-adjusting IQ scores isolates within-cohort variation in ability, but it does not tell us about which cohorts are smart or dumb
+
+## Wages, Experience and IQ
+
+- now, what if you had instead $z$, an IQ test administered at the same _age_?
+    - would controlling for $z$ help us isolate the experience effects?
+- answer: depends whether you adjust $z$ for age.
+    - if you use raw $z$, you are fine
+    - the component of ability that predicts cohort gets residualized out by OLS
+    - and, our $D^*$ will be variation in experience that is orthogonal to cohort ability
+- HOWEVER, if you age-adjust $z$ to form $z^*$, you undo the benefit of having kids tested at the same age
+    - you would then be regressing log wages on $\alpha z^* + D\gamma$
+    - because $z^*$ is orthogonal to $D$ by construction, we know the estimated $\gamma$ will be identical to the one from regressing log wages on $D$ alone
+        - and, as we discussed, that reflects both cohort and experience effects
+
+## Residual Variation
+
+- the bottom line here is that your choice of specification determines the residual variation used to estimate your coefficient of interest
+- many specification choices, e.g.
+    - fixed effects
+    - measurement error
+    - normalizations
+    - omitted variables
+- the key to thinking clearly about the costs and benefits of these choices is to think about how they change the residual variation "in the denominator"
+
+## Diff-in-Diff Mechanics
+
+- suppose now we have $Y_{it} = \alpha + \beta D_{i} + \gamma T_t + \theta D_i \times T_t + e$
+    - $D_i$ is an indicator for a treatment group that starts off untreated
+        - the "control" group with $D_i = 0$ never gets treated
+    - $T_t$ is a dummy for the period after treatment is applied 
+    - what would the data matrix look like?
+- the OLS orthogonality conditions tell us that
+    $$
+    \sum_{D_i = 1} \hat{e}_i = 0
+    $$
+    and similarly for 
+
+# Conditional Independence and Causal Effects
+
+## Conditional Independence and Causal Effects
+
+
+## References

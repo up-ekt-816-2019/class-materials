@@ -90,6 +90,21 @@ padding-bottom: 10px;
 - we say $a + bX_2$ is the _linear projection_ of $X_1$ onto $X_2$
     - $X_1^*$ is the component of $X_1$ that is orthogonal to $X_2$
 
+## Linear Projections: Example
+
+- suppose the joint distribution of $(D, X)$ is as follows:
+    - $P(D = 0, X = 0) = 0.1$
+    - $P(D = 0, X = 1) = 0.2$
+    - $P(D = 1, X = 0) = 0.5$
+    - $P(D = 1, X = 1) = 0.2$
+- you can confirm that:
+    - $\cov(D, X) = -0.08$ and $V[X] = 0.24$
+    - $D^* = D + X/3 - 5/6$, $E[D^*] = 0$, and $\cov(D^*, X) = 0$
+    - nevertheless, $X$ and $D^*$ are _not_ independent
+        - compare $P(D^* = 5/6, X = 0) = 0.1$
+        - yet, $P(D^* = 5/6) = 0.1$ and $P(X = 0) = 0.6$
+
+
 # Derivation of OLS Formula
 
 ## Derivation of OLS Formula
@@ -238,22 +253,67 @@ $$
     - omitted variables
 - the key to thinking clearly about the costs and benefits of these choices is to think about how they change the residual variation "in the denominator"
 
-## Diff-in-Diff Mechanics
-
-- suppose now we have $Y_{it} = \alpha + \beta D_{i} + \gamma T_t + \theta D_i \times T_t + e$
-    - $D_i$ is an indicator for a treatment group that starts off untreated
-        - the "control" group with $D_i = 0$ never gets treated
-    - $T_t$ is a dummy for the period after treatment is applied 
-    - what would the data matrix look like?
-- the OLS orthogonality conditions tell us that
-    $$
-    \sum_{D_i = 1} \hat{e}_i = 0
-    $$
-    and similarly for 
-
 # Conditional Independence and Causal Effects
 
 ## Conditional Independence and Causal Effects
 
+- When does OLS give us an estimate of the _causal_ effect of $D$?
+    - we have already seen one simple case: where $D$ is assigned at random (as in an experiment)
+    - in this case, you can compute the difference between treatment and controls by regressing $Y$ on $D$
+    - but, why would we "control" for $X$ then?
+        - and, what needs to be true about the joint distribution of $(Y_1, Y_0, D, X)$ for us to recover a causal effect?
+- the basic answer is that we need $D$ to be independent of the potential outcomes, conditional on $X$
+    - sometimes people call this the "conditional independence assumption" or CIA
+    - you can interpret this to mean: once we have accounted for $X$, people choose $D$ at random
+    - this assumption should make you feel very uncomfortable!
+
+## Example of CIA
+
+- suppose we are interested in the causal effect of education ($D$) on earnings ($Y$)
+    - people live in different locations, encoded in a vector of location dummies $X$
+    - now, under what conditions can we run a regression of $Y$ on $(D, X)$ and interpret the coefficient on $D$ as causal?
+- here is one set of sufficient conditions:
+    - suppose $D = bX +u$ with $u \indep X$
+    - and, suppose $Y = \alpha + \beta D + \gamma X + \varepsilon$ with $\varepsilon \indep u$
+    - finally, assume $\cov(X, \varepsilon) \neq 0$
+- under these assumptions you can show that:
+    - $\cov(Y_0, D) = \gamma b V[X] + b \cov(X, \varepsilon)$
+        - so, $D$ is not unconditionally independent of the potential outcomes
+
+## Example of CIA
+
+- if you were to run OLS of $Y$ on $D$ you'd get
+          $$
+          \plim \widehat{\beta} = \beta + \gamma b\frac{V[D]}{V[X]} + b\frac{\cov(X, \varepsilon)}{V[D]} \neq \beta
+          $$
+- however, the residual variation in $D$ once $X$ has been predicted out (in this case, $u$) _is_ independent of $(Y_1, Y_0)$
+    - thus, controlling for $X$ is _necessary_ to obtain the causal effect of $D$
+- now, does the coefficient on $X$ have a causal interpretation?
+    - first note that by FWL, the coefficient on $X$ is the same whether we include $D^*$ or not
+    - you can show that 
+      $$
+      \frac{\cov(X, Y)}{V[X]} = \beta b + \gamma + \frac{\cov(X, \varepsilon)}{V[X]} \neq \gamma
+      $$
+    - beyond the fact that $X$ has an indirect effect via $D$ (the $\beta b$ term), $X$ is correlated with the potential outcomes because $\cov(X, \varepsilon) \neq 0$
+        - thus, we cannot interpret the coefficient on $X$ as causal
+        - even though we need to control for it in order to estimate $\beta$ consistently
+
+## Example of CIA
+
+- next, we will work through this model of the "data generating process" and ask whether its assumptions make sense in context
+- one interpretation is:
+    - distribution of education differs across locations for reasons to do with
+        - the characteristics of the location itself ($bX$, e.g. local education policies) 
+        - and person-specific factors ($u$, e.g. ability) which are _independent_ of location
+        - why might $X \indep u$ fail?
+    - further, earnings differ across people because of
+        - direct effects of location-specific factors $\gamma X$, e.g. differences in labor demand
+        - education itself ($\beta D$)
+        - individual-specific factors $\varepsilon$ (e.g. individual labor supply preferences, family obligations)
+- does it make sense to assume $u \indep \varepsilon$? What does this assumption mean?    
+    - mechanically, it gives us that $D|X$ is independent of potential outcomes
+    - in context, it means location is the _only_ thing that affects both earnings and education 
+        - once we have accounted for it, education is not affected by (e.g.) earnings potential or ability
+      
 
 ## References

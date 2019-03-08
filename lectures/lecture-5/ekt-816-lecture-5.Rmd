@@ -1,0 +1,213 @@
+---
+title: EKT-816 Lecture 5
+subtitle: OLS Consistency and Inference
+author: Jesse Naidoo
+institute: University of Pretoria
+fontsize: 10pt
+output:
+ beamer_presentation:
+    template: ../../../../../templates/svm-latex-beamer.tex
+    keep_tex: false
+    incremental: true
+#    toc: false 
+    slide_level: 2
+ ioslides_presentation:
+    smaller: true
+make149: true
+bibliography: ../../../../../library.bib
+biblio-style: authordate1
+header-includes: |
+    \DeclareMathOperator*\plim {plim}
+    \DeclareMathOperator*\cov {cov}
+    \newcommand{\indep}{\perp \! \! \! \perp}
+---
+
+<style>
+slides > slide.backdrop {
+  background: white;
+  border-bottom: 0px;
+  box-shadow: 0 0 0;
+}
+
+
+slides > slide {
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  border-bottom: 3px solid  #F66733;
+  box-shadow:  0 3px 0 #522D80;
+
+}
+
+.title-slide hgroup h1 {
+  color: #522D80;
+}
+
+
+
+h2 {
+
+  color: #522D80;
+}
+
+slides > slide.dark {
+  background: #522D80 !important;
+  border-bottom: 0;
+  box-shadow: 0 0 0;
+}
+
+.segue h2 {
+  color: white;
+}
+
+slides > slide.title-slide {
+  border-bottom: 0;
+  box-shadow: 0 0 0;
+}
+
+ol, ul {
+
+padding-bottom: 10px;
+
+}
+
+</style>
+
+# Preliminaries
+
+## Preliminaries
+
+- Continuous Mapping Theorem: if $X_n \longrightarrow_p X_0$ and $g(\cdot)$ is continuous, then $g(X_n) \longrightarrow_p g(X_0)$.
+- Slutsky's Theorem:
+    - if $X_n \longrightarrow_p X_0$ (a constant) and $Y_n \longrightarrow_d Y$ (a nondegenerate distribution), then $X_n + Y_n \longrightarrow_d X_0 + Y$.
+    - if $X_n \longrightarrow_p X_0$ (a constant) and $Y_n \longrightarrow_d Y$ (a nondegenerate distribution), then $X_nY_n \longrightarrow_d X_0Y$.
+- Delta method: if $X_n \longrightarrow_d N(\mu, \Sigma)$, and $g(\cdot)$ is smoothly differentiable, then $g(X_n) \longrightarrow_d N(g(\mu), \nabla g(\mu) \Sigma \nabla g(\mu)')$.
+    - here, $\nabla g(x)$ is the gradient of $g$ (recall $X$ can be a vector)
+- you can find proofs of these statements in, e.g. Appendix A of @Cameron2005 
+    - Ch.3 of @Wooldridge2010 or Ch. 6 of @Stachurski2016 also cover basic asymptotic theory
+
+# Asymptotic Distribution of the OLS Estimator
+
+## Asymptotic Distribution of the OLS Estimator
+
+- to build up intuition, think of the single-regressor case:
+  $$
+  y = x\beta + \varepsilon
+  $$
+  with $\varepsilon \indep x$ and $E[x] = E[\varepsilon] = 0$.
+    - we know $\widehat{\beta} = \widehat{\cov}(y, x)/\widehat{V}[x] = \sum_iy_ix_i/\sum_i x^2_i$.
+- we also know $V[\widehat{\beta}] = \sigma^2_\varepsilon/V[x]$
+    - in the usual picture, this corresponds to the fact that estimating $\beta$ is "harder" with:
+        - more vertical dispersion in $y$ (i.e. larger values of $\sigma^2_\varepsilon$)
+        - less horizontal dispersion in $x$ (i.e. smaller values of $V[x]$)
+- now, we are going to extend this result to more complicated settings:
+    - multiple regressors
+    - unequal variances for $\varepsilon$ at different values of $x$ ("heteroskedasticity")
+    - correlations between the errors of different observations (serial correlation or clustering)
+
+## Asymptotic Distribution of the OLS Estimator
+
+- we want to apply a central limit theorem to $\widehat{\beta}$
+- because $\widehat{\beta} = (X'X)^{-1}X'Y = \beta + (X'X)^{-1}X'\varepsilon$, we have
+  \begin{eqnarray}
+  \sqrt{N}\left(\widehat{\beta} - \beta \right) & = & (X'X/N)^{-1}(X'\varepsilon/\sqrt{N}) \label{eq:aVar-betahat}
+  \end{eqnarray}
+- we will maintain the assumption that $X'\varepsilon/N \longrightarrow_p 0$
+    - an easy sufficient condition is that $\varepsilon$ is _mean independent_ of $X$, i.e. $E[\varepsilon|X] = 0$
+    - we don't want to go as far as assuming $\varepsilon$ is independent of $X$ though
+        - why not? Full independence implies no heteroskedasticity or clustering
+    - if $X'\varepsilon/N \longrightarrow_p 0$, we get that OLS is _consistent_ for $\beta$
+- the simple case is one where $E[\varepsilon\varepsilon'|X] = \sigma^2I$
+    - take variances on both sides of (\ref{eq:aVar-betahat}) to get that
+      $$
+      \sqrt{N}\left(\widehat{\beta} - \beta\right) \longrightarrow_d N(0,\sigma^2(X'X)^{-1})
+      $$
+    - notice, this is just a multivariable generalization of $V[\widehat{\beta}] = \sigma^2_\varepsilon/V[X]$
+    - so, to do inference on the elements of $\widehat{\beta}$ (or functions of them) in practice, we'd use the _asymptotic covariance matrix_ $s^2(X'X)^{-1}/N$
+
+## Asymptotic Distribution of the OLS Estimator
+
+- we always get that $(X'X/N)^{-1} \longrightarrow_p (E[X'X])^{-1} = M^{-1}$, by the LLN
+- so, the key part of the previous argument was characterizing the limiting value of 
+  $$
+  \plim X'\varepsilon\varepsilon'X/N = V \text{ , say}
+  $$
+- "best practice" in applied micro is _not_ to try and explicitly model $V$
+    - you might imagine writing down a parametric model $V(\gamma)$ and trying to estimate $\gamma$ simultaneously with $\beta$
+        - or, using the estimated OLS residuals $\widehat{\varepsilon}$ as a first-stage input into the estimation of $\gamma$, then using $\widehat{\gamma}$ to re-estimate $\beta$
+        - if you specify the model for $V(\gamma)$ correctly, this can yield efficiency gains over OLS
+        - BUT, a major disadvantage is that if you get the model for $V$ wrong, you end up losing consistency of $\widehat{\beta}$
+        - this approach is usually called "generalized least squares" (GLS)
+- instead, various data-driven approximations of $V$ are used to get "robust" standard errors
+
+## Asymptotic Distribution of the OLS Estimator
+
+- the goal is to obtain estimates of the precision of $\widehat{\beta}$ that are approximately correct under a wide range of assumptions about the exact form of $E[\varepsilon\varepsilon'|X]$
+    - after all, we know OLS is consistent (if possibly inefficient)
+    - GLS may not even be consistent if we misspecify the model for the error covariances!
+- if you carry out the matrix multiplication you will see that 
+  $$
+  X'\varepsilon\varepsilon'X/N = N^{-1}\sum^N_{i=1}\sum^N_{j=1}X_jX'_i\varepsilon_i\varepsilon_j
+  $$
+- there are different choices of "robust" standard errors
+    - Newey-West, Eicker-White, HC0, HC1, etc
+    - all of these amount to different choices of weights $\omega_{ij}$ in a formula like
+      $$
+      \widehat{V} = \sum^N_{i=1}\sum^N_{j=1}\omega_{ij}X_jX'_i\widehat{\varepsilon}_i\widehat{\varepsilon}_j
+      $$
+
+## Asymptotic Distribution of the OLS Estimator
+
+- for more details about this, see Ch. 4.4 of @Cameron2005 or Ch. 8 of @Angrist2008
+    - @Cameron2015 is a useful reference about clustering, in particular
+- next, we turn to a different question: why are we running OLS in the first place?
+
+# OLS as the Best Linear Approximation of $E[Y|X]$
+
+## OLS as the Best Linear Approximation of $E[Y|X]$
+
+- we can motivate OLS without literally believing $Y = X\beta + \varepsilon$ is the data-generating process
+- instead, consider the following problems
+    - $\beta^* = \arg\min_b E[(Y - Xb)^2]$, finding the best linear predictor of $Y$
+    - $\beta^{**} = \arg\min_b E[(E[Y|X] - Xb)^2]$, finding the best linear approximation to $E[Y|X]$
+- the OLS coefficient is $\beta^*$ by definition, but these two problems have identical solutions
+    - so, we can always think of the OLS coefficient as providing the best linear approximation to the conditional mean $E[Y|X]$, even if it is nonlinear 
+- of course, these facts tell us _nothing_ about causality!
+    - the _causal_ question "what would happen to $Y$ on average if we manipulated $X$ by one unit" makes no sense without a model!
+        - umbrella prevalence predicts rainfall
+        - ambulances predict car crashes
+    - on the other hand, if you start with a causal model (say from economic theory), knowing that OLS estimates approximate $E[Y|X]$ helps you think about whether you are going to get a good estimate of the causal effect you are trying to measure
+
+# More on Causality
+
+## More on Causality
+
+- consider the following setup:
+    - $y_i$ is output per acre on farm $i$
+    - $x_{i1}$ is an index of soil quality
+    - $x_{i2}$ is an index of weather quality
+    - $x_{i3}$ is an index of pesticide use
+    - $e_i$ is a measure of insect population density
+- We know that crop yields are determined as
+$$
+y = x_1\beta_1 + x_2\beta_2 + x_3\beta_3 + e
+$$
+- $x_1$, $x_2$, and $e$ are mutually independent with mean zero
+
+## More on Causality
+
+- consider two different assumptions about how pesticide use is determined:
+    - model A: farmers ignore soil quality (or do not observe it), but they do observe the level of insect populations
+        - they set $x_3 = -e/\gamma + \eta$ where $\eta$ is independent of all the $x$ variables
+    - model B: farmers set $x_3 = x_1 - e/\gamma_2 + \varepsilon$, where $\varepsilon$ is independent of the $x$ variables
+- You have access to data on $y$, $x_1, x_2$, and $x_3$
+- do you want to control for pesticide use if your goal is to estimate $\beta_1$?
+- suppose model A generates the data and you use $x_3$ in your regression
+    - $\widehat{\beta}_1$ will be consistent for $\beta_1$ (why?)
+    - however, you cannot estimate $\beta_3$ consistently:
+      $$
+      \plim \widehat{\beta}_3 = \beta_3 - \frac{\sigma^2_e/\gamma}{\sigma^2_e/\gamma^2 + \sigma^2_\eta} < \beta_3
+      $$
+
+ 
+# References
+
+## References

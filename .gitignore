@@ -1,4 +1,5 @@
 # R history
+*.Rhistory
 admin/syllabus/.Rhistory
 
 # temporary files from vi

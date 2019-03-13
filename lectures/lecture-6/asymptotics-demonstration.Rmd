@@ -16,7 +16,7 @@ library(reshape2)
 Let's generate some uniform random numbers.
 
 ```{r}
-u <- runif(1000)
+u <- runif(10000)
 ggplot(data=as.tibble(u),aes(x=u)) + geom_density()
 ```
 
@@ -40,7 +40,7 @@ inverseCDF <- function(p){
 }
 ```
 
-Let's confirm that when we apply the inverse CDF to the uniform random numbers, we do indeed get draws from our target distribution - in this case, the Exponential(1) distribution.
+Let's confirm that when we apply the inverse CDF to the uniform random numbers, we do indeed get draws from our target distribution - in this case, the Exponential(0.05) distribution.
 
 ```{r}
 # R understands how to apply user-defined functions to whole vectors of inputs

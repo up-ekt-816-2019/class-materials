@@ -8,6 +8,7 @@ gc()
 
 library(tidyverse)
 library(skimr)
+library(reshape2)
 ```
 
 # Generating Draws from a Target Distribution
@@ -31,7 +32,7 @@ $$
 Next, we need to define a function so that we can evaluate the inverse CDF $G(p)$.
 
 ```{r}
-lambda = 1
+lambda = 0.05 # so, E[X] = 20 and V[X] = 400
 
 inverseCDF <- function(p){
   x <- -log(1-p)/lambda
@@ -51,9 +52,9 @@ Now, we generate the draws from the sampling distribution. Note carefully what t
 
 ```{r}
 
-B = 1000
+B = 10000
 
-sample_sizes <- c(10, 100, 1000, 10000)
+sample_sizes <- c(5, 50, 500, 5000)
 df <- as.tibble(data.frame(matrix(NA, nrow = B, ncol = length(sample_sizes))))
 for (i in 1:length(sample_sizes)){
   colnames(df)[i] <- paste("n", sample_sizes[i], sep = "")
@@ -70,8 +71,6 @@ for (i in 1:length(sample_sizes)){
   }
 }
 
-
-
 ```
 
 Now that we have our $B$ draws from $\hat{\theta}_n$, we need to standardize them and plot the distributions.
@@ -81,11 +80,26 @@ Now that we have our $B$ draws from $\hat{\theta}_n$, we need to standardize the
 standardized_draws <- as.tibble(data.frame(matrix(NA, nrow = B, ncol = length(sample_sizes))))
 for (i in 1:length(sample_sizes)){
   colnames(standardized_draws)[i] <- paste("z", sample_sizes[i], sep = "")
-  standardized_draws[i] <- sqrt(sample_sizes[i])*(df[i] - 1)
+  standardized_draws[i] <- lambda*sqrt(sample_sizes[i])*(df[i] - (1/lambda))
 }
 
-# clean up
-rm(sample_sizes)
 ```
 
+Let's look at some summary statistics 
+
+```{r}
+
+# first, the draws themselves
+skim(df)
+
+# now, the standardized versions
+# we 
+skim(standardized_draws)
+```
+
+```{r}
+mydata <- melt(standardized_draws)
+ggplot(mydata,aes(x=value, fill=variable)) + geom_density(alpha=0.25)
+# ggplot(standardized_draws,aes(x=value, fill=variable)) + geom_histogram(alpha=0.25)
+```
 

@@ -1,0 +1,91 @@
+---
+title: "Demonstrating The LLN and CLT"
+output: html_notebook
+---
+```{r}
+rm(list=ls())
+gc()
+
+library(tidyverse)
+library(skimr)
+```
+
+# Generating Draws from a Target Distribution
+
+Let's generate some uniform random numbers.
+
+```{r}
+u <- runif(1000)
+ggplot(data=as.tibble(u),aes(x=u)) + geom_density()
+```
+
+Now, we apply the inverse CDF trick to get random numbers from a desired distribution. We'll use the exponential distribution, which has the CDF
+$$
+F(x) = 1 - e^{-\lambda x}
+$$
+for given $\lambda > 0$. The inverse CDF is given by 
+$$
+x = G(p) = -\lambda^{-1}\log(1-p)
+$$
+
+Next, we need to define a function so that we can evaluate the inverse CDF $G(p)$.
+
+```{r}
+lambda = 1
+
+inverseCDF <- function(p){
+  x <- -log(1-p)/lambda
+  return(x)
+}
+```
+
+Let's confirm that when we apply the inverse CDF to the uniform random numbers, we do indeed get draws from our target distribution - in this case, the Exponential(1) distribution.
+
+```{r}
+# R understands how to apply user-defined functions to whole vectors of inputs
+myX <- inverseCDF(u)
+ggplot(data=as.tibble(myX),aes(x=myX)) + geom_density()
+```
+
+Now, we generate the draws from the sampling distribution. Note carefully what the inner loop (over $b$) does as opposed to the outer loop (over $n$).
+
+```{r}
+
+B = 1000
+
+sample_sizes <- c(10, 100, 1000, 10000)
+df <- as.tibble(data.frame(matrix(NA, nrow = B, ncol = length(sample_sizes))))
+for (i in 1:length(sample_sizes)){
+  colnames(df)[i] <- paste("n", sample_sizes[i], sep = "")
+}
+
+# set a seed for the (pseudo-) random number generator to ensure reproducibility
+set.seed(03132019)
+
+for (i in 1:length(sample_sizes)){
+  for (b in 1:B){
+      x <- inverseCDF(runif(sample_sizes[i]))
+      df[b,i] <- mean(x)
+      rm(x)
+  }
+}
+
+
+
+```
+
+Now that we have our $B$ draws from $\hat{\theta}_n$, we need to standardize them and plot the distributions.
+
+```{r}
+
+standardized_draws <- as.tibble(data.frame(matrix(NA, nrow = B, ncol = length(sample_sizes))))
+for (i in 1:length(sample_sizes)){
+  colnames(standardized_draws)[i] <- paste("z", sample_sizes[i], sep = "")
+  standardized_draws[i] <- sqrt(sample_sizes[i])*(df[i] - 1)
+}
+
+# clean up
+rm(sample_sizes)
+```
+
+
